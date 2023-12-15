@@ -1,0 +1,61 @@
+<form class="row g-1 needs-validation" novalidate hidden>
+    <div class="row g-1">
+        <h2>Solicitud</h2>
+    </div>
+    <div class="row g-1">
+        <div class="col-12">
+            <label for="tipo_reparacion" class="col-form-label col-form-label-sm">Tipo de reparación</label>
+            <select class="form-select form-select-sm save-solicitud" name="tipo_reparacion" id="tipo_reparacion" onchange="typeReparacion(event)" required>
+                <option selected value=""></option>
+                <option value="Equipos y maquinarias">Equipos y maquinarias</option>
+                <option value="Instalaciones">Instalaciones</option>
+                <option value="Dispositivos">Dispositivos</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="sector" class="col-form-label col-form-label-sm">Sector</label>
+            <select class="form-select form-select-sm save-solicitud" name="sector" id="sector" onchange="loadSubsector(event)" required>
+                <option selected value=""></option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="subsector" class="col-form-label col-form-label-sm">Subsector</label>
+            <select class="form-select form-select-sm save-solicitud" name="subsector" id="subsector" required>
+                <option selected value=""></option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="cod_maquina" class="col-form-label col-form-label-sm">Código Máquina/Equipo</label>
+            <input type="text" class="form-control form-control-sm save-solicitud" aria-describedby="descripcionMaquina" name="cod_maquina" id="cod_maquina" onchange="loadDataEquipos(event)" required>
+            <div id="descripcionMaquina" class="form-text">
+            </div>
+        </div>
+        <div class="col">
+            <label for="descripcion" class="col-form-label col-form-label-sm">Descripción</label>
+            <textarea class="form-control form-control-sm save-solicitud" name="descripcion" id="descripcion" autocomplete="off" rows="3" required></textarea>
+        </div>
+        <div class="col-12">
+            <label for="prioridad" class="col-form-label col-form-label-sm">Prioridad</label>
+            <select class="form-select form-select-sm save-solicitud" name="prioridad" id="prioridad" required>
+                <option selected value=""></option>
+                <option value="Baja">Baja</option>
+                <option value="Media">Media</option>
+                <option value="Alta">Alta</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="solicita" class="col-form-label col-form-label-sm">Solicita</label>
+            <select class="form-select form-select-sm save-solicitud" name="solicita" id="solicita" required>
+                <option selected value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="row g-1 btn-next-submit text-center">
+        <div class="col">
+            <button type="button" class="btn btn-success" onclick="saveSolicitud(event)">Siguiente</button>
+        </div>
+    </div>
+</form>
+<div class="send-form-message">
+    
+</div>
