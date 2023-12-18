@@ -1,5 +1,5 @@
 const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
-const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+const SCOPES = 'https://mail.google.com/ https://www.googleapis.com/auth/spreadsheets';
 let tokenClient;
 let gapiInited = false;
 let gisInited = false;
@@ -16,7 +16,7 @@ function gapiLoaded() {
 async function initializeGapiClient() {
     await gapi.client.init({
         apiKey: API_KEY,
-        discoveryDocs: [DISCOVERY_DOC],
+        discoveryDocs: [DISCOVERY_DOC,'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
     });
     gapiInited = true;
     maybeEnableButtons();
@@ -51,21 +51,23 @@ function handleAuthClick() {
         if(form){
             form.removeAttribute('hidden')
         }
+        tokenClient = gapi.client.getToken().access_token
+        if(!localStorage.getItem('token')) {
+            localStorage.setItem('token',tokenClient)
+        }
+        //await sendEmail()
         await loadedWindow();
     };
+   
     /* The trap */
-    gapi.client.setToken('accessToken')
-    if (gapi.client.getToken() === null) {    
-        // Prompt the user to select a Google Account and ask for consent to share their data
-        // when establishing a new session.
+    gapi.client.setToken(localStorage.getItem('token'))
+    if (gapi.client.getToken() === null) {
         tokenClient.requestAccessToken({ prompt: 'consent' });
         
     } else {
-        // Skip display of account chooser and consent dialog for an existing session.
         tokenClient.requestAccessToken({ prompt: '' });
     }
 }
-//tokenClient = JSON.parse(localStorage.getItem('tokenClient'));
 
 function handleSignoutClick() {
     const token = gapi.client.getToken();

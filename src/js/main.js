@@ -7,9 +7,6 @@ const sheetSectores = 'Sectores!A1:C';
 const sheetUsuarios = 'Usuarios!A1:H';
 
 const interface = document.getElementById('interface');
-//const pageSolicitud = document.getElementById('pageSolicitud')
-
-
 async function loadedResourses(range) {
   let response;
   try {
@@ -23,18 +20,12 @@ async function loadedResourses(range) {
     console.log(e)
   }
 }
-
 async function loadedWindow() {
     try {
-      //let x = await createId(sheetSolicitud)
-      //console.log(x)
       } catch (e) {
         console.log(e)
-      } finally {
-        
-      }
+      } 
 }
-
 function arrayToObject(arr) {
   // Obtenemos los encabezados del array
   var headers = arr[0];
@@ -93,16 +84,16 @@ async function postData(range, data) {
 
   }
 }
-function getFormatDate(fecha) {
-  var mes = fecha.getMonth() + 1; //obteniendo mes
-  var dia = fecha.getDate(); //obteniendo dia
-  var ano = fecha.getFullYear(); //obteniendo año
+function getFormatDate(date) {
+  var mes = date.getMonth() + 1; //obteniendo mes
+  var dia = date.getDate(); //obteniendo dia
+  var ano = date.getFullYear(); //obteniendo año
   if (dia < 10)
     dia = '0' + dia; //agrega cero si el menor de 10
   if (mes < 10)
     mes = '0' + mes //agrega cero si el menor de 10
-  fecha = `${dia}/${mes}/${ano}`
-  return fecha
+  date = `${dia}/${mes}/${ano}`
+  return date
 }
 async function createId(range) {
   let ids
@@ -117,4 +108,22 @@ async function createId(range) {
   } catch (error) {
 
   }
+}
+async function loadPage(srcPage) {
+  let response;
+  try {
+      response = await fetch(srcPage);
+      response = await response.text();
+      interface.innerHTML = response;
+    } catch (e) {
+      console.log(e)
+    }
+}
+function loadInputsById(data) {
+  for (item in data) {
+    let testData = !!document.getElementById(item);
+    if (testData) {
+        document.getElementById(item).value = data[item]
+    }
+}
 }

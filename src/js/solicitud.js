@@ -4,21 +4,60 @@ let inputSubsector;
 let descripcionMaquina;
 let inputPrioridad;
 let inputCodigo;
-let dataForm = {}
+let dataForm = {};
+let dataEquipo = {};
+class Solicitud {
+    constructor({id,fecha,sector,subsector,cod_maquina,descripcion,prioridad,solicita}) {
+        this.id = id;
+        this.fecha = fecha;
+        this.sector = sector;
+        this.subsector = subsector;
+        this.cod_maquina = cod_maquina;
+        this.descripcion = descripcion;
+        this.prioridad = prioridad;
+        this.solicita = solicita;
+    }
+
+    static async create(data) {
+        try {
+            data['fecha'] = getFormatDate(new Date());
+            data['id'] = await createId(sheetSolicitud)
+            const headers = await getHeaders(sheetSolicitud);
+            const newSolicitud = new Solicitud(data);
+            const newData = objectToArray(newSolicitud, headers);
+            postData(sheetSolicitud, newData);
+            let containerMessage = document.querySelector('.send-form-message');
+            containerMessage.classList.toggle('display-none')
+            let form = document.querySelector('.form-solicitud');
+            form.classList.toggle('display-none')
+        } catch (e) {
+
+        } 
+    }
+    static async getSolicitudById(id) {
+        try {
+            let response = await loadedResourses(sheetSolicitud);
+            response = arrayToObject(response);
+            response = response.find(item => item.id === id)
+            if(response.cod_maquina!='N/A') {
+                let equipo = await Equipo.getDataEquipment(response.cod_maquina);
+                response['cod_nombre_equipo'] = `${response.cod_maquina}: ${equipo.descripcion}`
+            }
+            else {response['cod_nombre_equipo'] = `N/A`}
+            return response
+        } catch (e) {
+
+        }
+    }
+}
 async function loadSolicitud() {
-    let responseSolicitud;
     try {
-        responseSolicitud = await fetch('../src/solicitud.html');
-        responseSolicitud = await responseSolicitud.text();
-        
+        await loadPage('../src/solicitud.html')
+        loadOptionInSolicitud()        
       } catch (e) {
         console.log(e)
-      } finally {
-        interface.innerHTML = responseSolicitud;
-        loadOptionInSolicitud()
-      }
+      } 
 }
-
 async function loadOptionInSolicitud() {
     let sectores;
     let usuarios;
@@ -48,7 +87,6 @@ async function loadOptionInSolicitud() {
         })
     }
 }
-
 async function loadSubsector(event) {
     let sector = event.target.value
     let subsectores = await Sector.getSubsectorBySector(sector)
@@ -65,7 +103,7 @@ async function loadSubsector(event) {
 }
 async function loadDataEquipos(event) {
     let codigo = event.target.value
-    let dataEquipo = await Equipo.getDataEquipment(codigo);
+    dataEquipo = await Equipo.getDataEquipment(codigo);
     descripcionMaquina = document.getElementById('descripcionMaquina');
     inputPrioridad = document.getElementById('prioridad');
 
@@ -85,7 +123,14 @@ async function saveSolicitud(event) {
     if (valid) {
         let data = document.querySelectorAll('.save-solicitud');
         data.forEach(item => {dataForm[item.id] = item.value});
-        await Solicitud.create(dataForm)
+        await Solicitud.create(dataForm);
+        if(dataForm.cod_maquina==='N/A') {dataEquipo['descripcion'] = 'N/A'}
+        let dataEmail = {
+            recipient: 'sgc.gross@gmail.com',
+            subject: 'Solicitud de reparción',
+            body: bodyEmailSolicitud(dataForm, dataEquipo)
+          }
+        await sendEmail(dataEmail)
     }
     event.preventDefault()
 }
@@ -100,26 +145,5 @@ function typeReparacion(event) {
     else {
         inputCodigo.value = '';
         inputCodigo.removeAttribute('disabled','');
-    }
-}
-class Solicitud {
-    constructor({id,fecha,sector,subsector,cod_maquina,descripcion,prioridad,solicita}) {
-        this.id = id;
-        this.fecha = fecha;
-        this.sector = sector;
-        this.subsector = subsector;
-        this.cod_maquina = cod_maquina;
-        this.descripcion = descripcion;
-        this.prioridad = prioridad;
-        this.solicita = solicita;
-    }
-
-    static async create(data) {
-        data['fecha'] = getFormatDate(new Date());
-        data['id'] = await createId(sheetSolicitud)
-        const headers = await getHeaders(sheetSolicitud);
-        const newSolicitud = new Solicitud(data);
-        const newData = objectToArray(newSolicitud, headers);
-        postData(sheetSolicitud, newData)
     }
 }

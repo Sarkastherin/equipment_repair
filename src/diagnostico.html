@@ -1,0 +1,45 @@
+<form class="row g-1 needs-validation form-solicitud" novalidate>
+    <div class="row g-1">
+        <h2>Diagnóstico</h2>
+    </div>
+    <div class="row g-1">
+        <label for="idSolicitud" class="col-4 col-form-label col-form-label-sm">Id de solicitud</label>
+        <div class="col-8">
+            <input type="number" class="form-control form-control-sm" id="idSolicitud" onchange="getSolicitud(event)">
+        </div>
+    </div>
+    <div class="row g-1">
+        <div class="col-6">
+            <label for="sector" class="col-form-label col-form-label-sm t">Sector</label>
+            <input type="text" class="form-control form-control-sm load-inpu" id="sector" disabled>
+        </div>
+        <div class="col-6">
+            <label for="subsector" class="col-form-label col-form-label-sm ">Subsector</label>
+            <input type="text" class="form-control form-control-sm load-input" id="subsector" disabled>
+        </div>
+        <div class="col-12">
+            <label for="cod_nombre_equipo" class="col-form-label col-form-label-sm">Código Máquina/Equipo</label>
+            <textarea class="form-control form-control-sm" name="cod_nombre_equipo" id="cod_nombre_equipo" rows="2" required></textarea>
+        </div>
+    </div>
+    <div class="row g-1 display-none container-diagnostico">
+        <div class="col">
+            <label for="diagnostico" class="col-form-label col-form-label-sm">Diagnóstico</label>
+            <textarea class="form-control form-control-sm" name="diagnostico" id="diagnostico" autocomplete="off" rows="3" required></textarea>
+        </div>
+        <div class="col-12">
+            <label for="atiende" class="col-form-label col-form-label-sm">Atiende</label>
+            <select class="form-select form-select-sm" name="atiende" id="solicita" required>
+                <option selected value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="row g-1 btn-next-submit text-center">
+        <div class="col">
+            <button type="button" class="btn btn-success" >Siguiente</button>
+        </div>
+    </div>
+    <div class="send-form-message display-none">
+        <p class="lead text-center">¡Formulario enviado con exito!</p>
+    </div>
+</form>

@@ -19,9 +19,6 @@ class Equipo {
         } finally {
             response = arrayToObject(response)
             let equipo = response.find(item => item.codigo === codigo)
-            /* if(equipo === undefined) {
-                equipo = {descripcion: 'El código no existe', prioridad: ''}
-            } */
             return equipo
         }
     }
