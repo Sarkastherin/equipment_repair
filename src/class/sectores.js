@@ -6,23 +6,15 @@ class Sector {
     }
 
      static async getSectores() {
-        let response;
         try {
-            response = await loadedResourses(sheetSectores)
-        } catch (e) {
-            console.log(e)
-
-        } finally {
-            response = arrayToObject(response);
-            let sectores = response.reduce((arr, item) => {
-                if(!arr.includes(item.sector)) {
-                    arr.push(item.sector)
-                }
+            let response = await loadedResourses(sheetSectores);
+            let dataSectores = arrayToObject(response);
+            let sectores = dataSectores.reduce((arr, item) => {
+                if(!arr.includes(item.sector)) {arr.push(item.sector)}
                 return arr
             },[])
-            sectores = sectores.map(item => {return {nombre: item}})
             return sectores
-        }
+        } catch (e) {console.log(e)}
     }
 
     static async getSubsectorBySector(sector) {

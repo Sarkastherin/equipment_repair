@@ -1,4 +1,4 @@
-const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+const DISCOVERY_DOC = ['https://sheets.googleapis.com/$discovery/rest?version=v4', 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'];
 const SCOPES = 'https://mail.google.com/ https://www.googleapis.com/auth/spreadsheets';
 let tokenClient;
 let gapiInited = false;
@@ -16,7 +16,7 @@ function gapiLoaded() {
 async function initializeGapiClient() {
     await gapi.client.init({
         apiKey: API_KEY,
-        discoveryDocs: [DISCOVERY_DOC,'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
+        discoveryDocs: DISCOVERY_DOC,
     });
     gapiInited = true;
     maybeEnableButtons();
@@ -27,7 +27,7 @@ function gisLoaded() {
     tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: SCOPES,
-        callback: '', // defined later
+        callback: '',
     });
     gisInited = true;
     maybeEnableButtons();
@@ -55,11 +55,8 @@ function handleAuthClick() {
         if(!localStorage.getItem('token')) {
             localStorage.setItem('token',tokenClient)
         }
-        //await sendEmail()
         await loadedWindow();
     };
-   
-    /* The trap */
     gapi.client.setToken(localStorage.getItem('token'))
     if (gapi.client.getToken() === null) {
         tokenClient.requestAccessToken({ prompt: 'consent' });
@@ -79,5 +76,3 @@ function handleSignoutClick() {
         btn_sigout.setAttribute('hidden','');
     }
 }
-  
-

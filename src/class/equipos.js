@@ -10,16 +10,14 @@ class Equipo {
         this.estado = estado
     }
 
-    static async getDataEquipment(codigo) {
-        let response;
+    static async getEquipoByCod(codigo) {
         try {
-            response = await loadedResourses(sheetEquipos)
-        } catch {
-
-        } finally {
+            let response = await loadedResourses(sheetEquipos)
             response = arrayToObject(response)
             let equipo = response.find(item => item.codigo === codigo)
             return equipo
-        }
+        } catch (e) {
+
+        } 
     }
 }

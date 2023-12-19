@@ -43,13 +43,7 @@ function arrayToObject(arr) {
   }
   return newData; // Devolvemos el nuevo array de objetos
 }
-function validated(event, form) {
-  if (form.checkValidity()) {
-    event.preventDefault()
-  }
-  form.classList.add('was-validated')
-  return form.checkValidity()
-}
+
 function objectToArray(obj, arr) {
   for (item in obj) {
     if (arr.includes(item)) {
@@ -62,38 +56,24 @@ async function getHeaders(range) {
   let headers = (await loadedResourses(range))[0].map(item => item.toLocaleLowerCase());
   return headers
 }
-async function postData(range, data) {
-  try {
-    let response = await gapi.client.sheets.spreadsheets.values.append({
-      spreadsheetId: spreadsheetId,
-      range: range,
-      includeValuesInResponse: true,
-      insertDataOption: "INSERT_ROWS",
-      responseDateTimeRenderOption: "FORMATTED_STRING",
-      responseValueRenderOption: "FORMATTED_VALUE",
-      valueInputOption: "USER_ENTERED",
-      resource: {
-        majorDimension: "ROWS",
-        range: "",
-        values: [
-          data
-        ]
-      }
-    })
-  } catch (e) {
 
+function getFormatDate(date,withHours) {
+  let hour = ''
+  let month = date.getMonth() + 1; //obteniendo mes
+  let day = date.getDate(); //obteniendo dia
+  let year = date.getFullYear(); //obteniendo año
+  if (day < 10)
+    day = '0' + day; //agrega cero si el menor de 10
+  if (month < 10)
+    month = '0' + month //agrega cero si el menor de 10
+  let newDate = `${day}/${month}/${year}`
+  if (withHours) {
+    let hours = date.getHours() //obteniendo hora
+    let minutes = date.getMinutes(); //obteniendo minutes
+    let seconds = date.getSeconds();
+    hour = ` ${hours}:${minutes}:${seconds}`
   }
-}
-function getFormatDate(date) {
-  var mes = date.getMonth() + 1; //obteniendo mes
-  var dia = date.getDate(); //obteniendo dia
-  var ano = date.getFullYear(); //obteniendo año
-  if (dia < 10)
-    dia = '0' + dia; //agrega cero si el menor de 10
-  if (mes < 10)
-    mes = '0' + mes //agrega cero si el menor de 10
-  date = `${dia}/${mes}/${ano}`
-  return date
+  return newDate+hour
 }
 async function createId(range) {
   let ids
@@ -119,11 +99,14 @@ async function loadPage(srcPage) {
       console.log(e)
     }
 }
-function loadInputsById(data) {
+function loadInputsById(data,isDisabled) {
   for (item in data) {
-    let testData = !!document.getElementById(item);
+    const input =document.getElementById(item)
+    let testData = !!input;
     if (testData) {
-        document.getElementById(item).value = data[item]
+        input.value = data[item];
+        if(isDisabled) {input.setAttribute('disabled','')}
+        else {input.removeAttribute('disabled','')}
     }
-}
+  }
 }
