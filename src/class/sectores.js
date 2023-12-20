@@ -8,11 +8,7 @@ class Sector {
      static async getSectores() {
         try {
             let response = await loadedResourses(sheetSectores);
-            let dataSectores = arrayToObject(response);
-            let sectores = dataSectores.reduce((arr, item) => {
-                if(!arr.includes(item.sector)) {arr.push(item.sector)}
-                return arr
-            },[])
+            let sectores = arrayToObject(response);
             return sectores
         } catch (e) {console.log(e)}
     }

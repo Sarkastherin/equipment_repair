@@ -14,7 +14,7 @@ class Solicitud {
         let responsePost;
         try {
             data.id = await createId(sheetSolicitud);
-            data.fecha = getFormatDate(new Date(),true);
+            data.fecha = getFormatDate(false,true);
             const headers = await getHeaders(sheetSolicitud);
             const newSolicitud = new Solicitud(data);
             const newData = objectToArray(newSolicitud, headers);
@@ -30,14 +30,20 @@ class Solicitud {
             let response = await loadedResourses(sheetSolicitud);
             response = arrayToObject(response);
             response = response.find(item => item.id === id)
-            if(response.cod_maquina!='N/A') {
-                let equipo = await Equipo.getDataEquipment(response.cod_maquina);
-                response['cod_nombre_equipo'] = `${response.cod_maquina}: ${equipo.descripcion}`
-            }
-            else {response['cod_nombre_equipo'] = `N/A`}
             return response
         } catch (e) {
 
+        }
+    }
+    static async hasSolicitud(event) {
+        try {
+            let id = event.target.value;
+            let solicitudList = await loadedResourses(sheetSolicitud);
+            solicitudList = arrayToObject(solicitudList);
+            let result = solicitudList.some(item => item.id === id)
+            return result
+        } catch (e) {
+            
         }
     }
 }

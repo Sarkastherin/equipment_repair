@@ -1,15 +1,15 @@
 const DataForm = {};
 
-async function openSolicitud() {
+async function openSolicitud(event) {
+    activeLinks(event)
     try {
         await loadPage('../src/html/solicitud.html');
         await loadSectores();
-        await loadUsuarios();    
+        await loadUsuarios('solicita');  
       } catch (e) {
         console.log(e)
-      } 
+      }
 }
-
 async function saveRegister(event) {
     let form = document.querySelector('form');
     let isValid = isValidForm(event, form);
@@ -19,12 +19,12 @@ async function saveRegister(event) {
         let dataResponse = await Solicitud.create(DataForm);
         if (dataResponse.status === 200) {
             await loadPage('../src/html/form-success.html');
+            /* Send Email */
+            let body = getBodySolicitud(dataResponse);
+            dataResponse.recipient = 'sgc.gross@gmail.com';
+            dataResponse.subject = 'Solicitud de reparción'
+            sendEmail(dataResponse,body)
         }
-        /* Send Email */
-        let body = getBodySolicitud(dataResponse);
-        dataResponse.recipient = 'sgc.gross@gmail.com';
-        dataResponse.subject = 'Solicitud de reparción'
-        sendEmail(dataResponse,body)
     }
     event.preventDefault()
 }

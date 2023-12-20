@@ -20,4 +20,35 @@ async function postData(range, data) {
     } catch (e) {
   
     }
+}
+async function updateData(data) {
+  try {
+    let response = await gapi.client.sheets.spreadsheets.values.batchUpdate({
+      spreadsheetId: spreadsheetId,
+      resource: {
+        data: data,
+        includeValuesInResponse: false,
+        responseDateTimeRenderOption: "FORMATTED_STRING",
+        responseValueRenderOption: "FORMATTED_VALUE",
+        valueInputOption: "USER_ENTERED"
+      }
+    })
+    return response
+  } catch (e) {
+    console.log(e)
   }
+}
+function createdDataToUpdate(arr, sheet) {
+  /* arr = [{row, colum, value}] */
+  let data = new Array()
+  for (item of arr) {
+    data.push({
+      majorDimension: "ROWS",
+      range: `${sheet}!R${item.row}C${item.column}`,
+      values: [
+        [item.value]
+      ]
+    })
+  }
+  return data
+}

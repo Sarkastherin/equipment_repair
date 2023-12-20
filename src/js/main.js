@@ -1,9 +1,10 @@
 const sheetSolicitud = 'Solicitud!A1:H';
 const sheetDiagnostico = 'Diagnóstico!A1:E';
-const sheetAcción = 'Accion!A1:G';
+const sheetAccion = 'Acción!A1:G';
 const sheetEntrega = 'Entrega!A1:D';
-const sheetEquipos = 'Equipos!A1:G';
-const sheetSectores = 'Sectores!A1:C';
+const sheetEquipos = 'Equipos!A1:H';
+const sheetSectores = 'Sectores!A1:B';
+const sheetSubsectores = 'Subsectores!A1:C';
 const sheetUsuarios = 'Usuarios!A1:H';
 
 const interface = document.getElementById('interface');
@@ -22,6 +23,12 @@ async function loadedResourses(range) {
 }
 async function loadedWindow() {
     try {
+      let response = await Subsector.getSubsectores()
+      console.log(response)
+      /* await loadPage('../src/html/equipos.html');
+      initilizeForAction()
+      listenerChangeEvent(Body) */
+
       } catch (e) {
         console.log(e)
       } 
@@ -58,7 +65,14 @@ async function getHeaders(range) {
 }
 
 function getFormatDate(date,withHours) {
-  let hour = ''
+  if(date){
+    date = date.split('-');
+    date = new Date(date[0],date[1]-1,date[2])
+  }
+  else {
+    date = new Date()
+  }
+  let time = ''
   let month = date.getMonth() + 1; //obteniendo mes
   let day = date.getDate(); //obteniendo dia
   let year = date.getFullYear(); //obteniendo año
@@ -71,9 +85,9 @@ function getFormatDate(date,withHours) {
     let hours = date.getHours() //obteniendo hora
     let minutes = date.getMinutes(); //obteniendo minutes
     let seconds = date.getSeconds();
-    hour = ` ${hours}:${minutes}:${seconds}`
+    time = ` ${hours}:${minutes}:${seconds}`
   }
-  return newDate+hour
+  return newDate+time
 }
 async function createId(range) {
   let ids
@@ -109,4 +123,20 @@ function loadInputsById(data,isDisabled) {
         else {input.removeAttribute('disabled','')}
     }
   }
+}
+
+function listenerChangeEvent(body) {
+  let list = body.querySelectorAll('[required]')
+  list.forEach(item => {
+    item.addEventListener('change', (event) => {
+      event.target.classList.add('change-save');
+    })
+  })
+}
+//******************************************** */
+
+function getColumnByKey(key, array) {
+  let newArray = array[0];
+  newArray = Object.keys(newArray)
+  return newArray.indexOf(key) + 1
 }
