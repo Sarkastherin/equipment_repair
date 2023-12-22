@@ -51,9 +51,9 @@ function handleAuthClick() {
         if(form){
             form.removeAttribute('hidden')
         }
-        tokenClient = gapi.client.getToken().access_token
+        let token = gapi.client.getToken().access_token
         if(!localStorage.getItem('token')) {
-            localStorage.setItem('token',tokenClient)
+            localStorage.setItem('token',token)
         }
         await loadedWindow();
     };
@@ -71,7 +71,6 @@ function handleSignoutClick() {
     if (token !== null) {
         google.accounts.oauth2.revoke(token.access_token);
         gapi.client.setToken('');
-        document.getElementById('content').innerText = '';
         btn_auth.innerText = 'Authorize';
         btn_sigout.setAttribute('hidden','');
     }

@@ -1,11 +1,16 @@
 const DataForm = {};
 
 async function openSolicitud(event) {
-    activeLinks(event)
     try {
-        await loadPage('../src/html/solicitud.html');
-        await loadSectores();
-        await loadUsuarios('solicita');  
+        if(Solicitud.canMadeSolicitud()) {
+            activeLinks(event)
+            await loadPage('../src/html/solicitud.html');
+            await loadSectores();
+            await loadUsuarios('solicita'); 
+        }
+        else {
+            console.log('Usted no tiene usuario')
+        }   
       } catch (e) {
         console.log(e)
       }

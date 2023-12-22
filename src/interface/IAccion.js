@@ -1,15 +1,20 @@
 const DataFormAccion = {};
 
 async function openAccion(event) {
-    activeLinks(event)
     try {
-        await loadPage('../src/html/accion.html'); 
-        await loadSectores();
-        await loadSubsectorList();
-        await loadUsuarios('responsable');   
-      } catch (e) {
+        if(Diagnostico.canMadeDiagnostico()) {
+            activeLinks(event)
+            await loadPage('../src/html/accion.html');
+            await loadSectores();
+            await loadSubsectorList();
+            await loadUsuarios('responsable');
+        }
+        else {
+            console.log('Usted no tiene los permisos requeridos')
+        }
+    } catch (e) {
         console.log(e)
-      }
+    }
 }
 async function initializeFormAccion(event) {
     try {
@@ -32,9 +37,9 @@ async function initializeFormAccion(event) {
             accionForm.classList.remove('display-none')
         }
         let id_solicitud = document.getElementById('id_solicitud')
-        id_solicitud.removeAttribute('disabled' , '')
+        id_solicitud.removeAttribute('disabled', '')
         //await loadUsuarios('responsable')
-        
+
     } catch (e) {
         console.log(e)
     }
@@ -45,14 +50,14 @@ async function saveAccion(event) {
     console.log(isValid)
     if (isValid) {
         let data = document.querySelectorAll('[required]');
-        data.forEach(item => {DataFormAccion[item.id] = item.value});
+        data.forEach(item => { DataFormAccion[item.id] = item.value });
         let dataResponse = await Accion.create(DataFormAccion);
         if (dataResponse.status === 200) {
             await loadPage('../src/html/form-success.html');
             let body = getBodyAccion(dataResponse);
             dataResponse.recipient = 'sgc.gross@gmail.com';
             dataResponse.subject = 'Accones tomadas en reparación'
-            sendEmail(dataResponse,body)
+            sendEmail(dataResponse, body)
         }
     }
     event.preventDefault()

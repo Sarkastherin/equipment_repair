@@ -3,10 +3,15 @@ const DataFormEntrega = {};
 async function openEntrega(event) {
     activeLinks(event)
     try {
-        await loadPage('../src/html/entrega.html');  
-        await loadSectores();
-        await loadSubsectorList();
-        await loadUsuarios('responsable_entrega');  
+        if(Entrega.canMadeEntrega()) {
+            await loadPage('../src/html/entrega.html');  
+            await loadSectores();
+            await loadSubsectorList();
+            await loadUsuarios('responsable_entrega'); 
+        }
+        else {
+            console.log('Usted no tiene los permisos requeridos')
+        }
       } catch (e) {
         console.log(e)
       }

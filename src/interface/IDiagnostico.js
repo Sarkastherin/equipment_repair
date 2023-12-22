@@ -1,12 +1,18 @@
 const DataFormDiagnostico = {};
 
 async function openDiagnostico(event) {
-    activeLinks(event)
+    
     try {
-        await loadPage('../src/html/diagnostico.html');
-        await loadSectores();
-        await loadSubsectorList();
-        await loadUsuarios('atiende'); 
+        if(Diagnostico.canMadeDiagnostico()) {
+            activeLinks(event)
+            await loadPage('../src/html/diagnostico.html');
+            await loadSectores();
+            await loadSubsectorList();
+            await loadUsuarios('atiende'); 
+        }
+        else {
+            console.log('Usted no tiene los permisos requeridos')
+        }  
       } catch (e) {
         console.log(e)
       }

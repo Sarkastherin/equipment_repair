@@ -31,4 +31,7 @@ class Entrega {
             
         }
     }
+    static canMadeEntrega() {
+        return hasUser && (usuario.rol == 'Usuario C' || usuario.rol == 'Administrador')
+    }
 }

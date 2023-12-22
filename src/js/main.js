@@ -8,6 +8,8 @@ const sheetSubsectores = 'Subsectores!A1:C';
 const sheetUsuarios = 'Usuarios!A1:H';
 
 const interface = document.getElementById('interface');
+let hasUser;
+let usuario
 async function loadedResourses(range) {
   let response;
   try {
@@ -22,16 +24,20 @@ async function loadedResourses(range) {
   }
 }
 async function loadedWindow() {
-    try {
-      let response = await Subsector.getSubsectores()
-      console.log(response)
-      /* await loadPage('../src/html/equipos.html');
-      initilizeForAction()
-      listenerChangeEvent(Body) */
-
-      } catch (e) {
-        console.log(e)
-      } 
+  try {
+    let email = await getEmail();
+    hasUser = await Usuario.hasUser(email);
+    usuario = await Usuario.getUserByEmail(email);
+    if (hasUser) {
+      await openInicio();
+    }
+    else {
+      console.log('No tiene usuario')
+    }
+  } catch (e) {
+    console.log(e)
+  } finally {
+  }
 }
 function arrayToObject(arr) {
   // Obtenemos los encabezados del array
@@ -64,10 +70,10 @@ async function getHeaders(range) {
   return headers
 }
 
-function getFormatDate(date,withHours) {
-  if(date){
+function getFormatDate(date, withHours) {
+  if (date) {
     date = date.split('-');
-    date = new Date(date[0],date[1]-1,date[2])
+    date = new Date(date[0], date[1] - 1, date[2])
   }
   else {
     date = new Date()
@@ -87,18 +93,18 @@ function getFormatDate(date,withHours) {
     let seconds = date.getSeconds();
     time = ` ${hours}:${minutes}:${seconds}`
   }
-  return newDate+time
+  return newDate + time
 }
 async function createId(range) {
   let ids
   try {
-      let response = await loadedResourses(range);
-      response.shift()
-      if(response.length>0) {
-        ids = response.map(item => Number(item[0]));
-        return Math.max(...ids) + 1
-      }
-      else { return 1}
+    let response = await loadedResourses(range);
+    response.shift()
+    if (response.length > 0) {
+      ids = response.map(item => Number(item[0]));
+      return Math.max(...ids) + 1
+    }
+    else { return 1 }
   } catch (error) {
 
   }
@@ -106,26 +112,27 @@ async function createId(range) {
 async function loadPage(srcPage) {
   let response;
   try {
-      response = await fetch(srcPage);
-      response = await response.text();
-      interface.innerHTML = response;
-    } catch (e) {
-      console.log(e)
-    }
+    response = await fetch(srcPage);
+    response = await response.text();
+    interface.innerHTML = response;
+  } catch (e) {
+    console.log(e)
+  }
 }
-function loadInputsById(data,isDisabled) {
+function loadInputsById(data, isDisabled) {
   for (item in data) {
-    const input =document.getElementById(item)
+    const input = document.getElementById(item)
     let testData = !!input;
     if (testData) {
-        input.value = data[item];
-        if(isDisabled) {input.setAttribute('disabled','')}
-        else {input.removeAttribute('disabled','')}
+      input.value = data[item];
+      if (isDisabled) { input.setAttribute('disabled', '') }
+      else { input.removeAttribute('disabled', '') }
     }
   }
 }
 
-function listenerChangeEvent(body) {
+function listenerChangeEvent() {
+  let body = document.querySelector('body');
   let list = body.querySelectorAll('[required]')
   list.forEach(item => {
     item.addEventListener('change', (event) => {

@@ -52,3 +52,13 @@ function createdDataToUpdate(arr, sheet) {
   }
   return data
 }
+async function getEmail() {
+  try {
+    let response = await gapi.client.gmail.users.getProfile({
+      "userId": "me"
+    })
+    return response.result.emailAddress
+  } catch (e) {
+    console.log(e)
+  }
+}

@@ -44,4 +44,7 @@ class Diagnostico {
 
         }
     }
+    static canMadeDiagnostico() {
+        return hasUser && (usuario.rol == 'Usuario B' || usuario.rol == 'Administrador')
+    }
 }

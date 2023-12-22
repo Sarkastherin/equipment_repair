@@ -23,12 +23,12 @@ class Equipo {
             console.log(e)
         }
     }
-    static async update(id, values) {
+    static async update(codigo, values) {
         let dataToUpdate = []
         try {
             let dataBase = await loadedResourses(sheetEquipos);
             dataBase = arrayToObject(dataBase);
-            let row = dataBase.findIndex(item => item.id === id) + 2;
+            let row = dataBase.findIndex(item => item.codigo === codigo) + 2;
             for (let item in values) {
                 dataToUpdate.push({
                     row: row,
@@ -36,6 +36,7 @@ class Equipo {
                     value: values[item]
                 })
             }
+            console.log(dataToUpdate)
             let data = createdDataToUpdate(dataToUpdate,'Equipos');
             let response = await updateData(data);
             return response.status

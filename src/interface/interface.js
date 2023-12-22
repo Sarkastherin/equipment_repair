@@ -22,7 +22,7 @@ async function loadUsuarios(idInput) {
         input.innerHTML = '<option selected value="">Seleccione una opción</option>'
         userNames.map(user => {
             let option = document.createElement('option');
-            let textNode = document.createTextNode(user.nombre);
+            let textNode = document.createTextNode(user.nombreCompleto);
             option.appendChild(textNode);
             option.value = user.alias;
             input.appendChild(option)
@@ -76,6 +76,15 @@ async function loadEquipo(event,isDisabled = true) {
         console.log(e)
     }
 }
+async function loadUsuario(event,isDisabled = true) {
+    try {
+        let email = event.target.value
+        let usuario = await Usuario.getUserByEmail(email)//Equipo.getEquipoByCod(codigo);
+        loadInputsById(usuario, isDisabled)
+    } catch (e) {
+        console.log(e)
+    }
+}
 async function loadSolicitud(event) {
     try {
         let id = event.target.value;
@@ -96,7 +105,42 @@ async function loadDiagnostico(event) {
         console.log(e)
     }
 }
-
+function modalShow(titulo,body){
+    var myModalShow = new bootstrap.Modal(document.getElementById('myModalMessage'));
+    var titleModal = document.querySelector(`#myModalMessage .modal-title`);
+    titleModal.innerText = titulo
+    var bodyModal = document.querySelector(`#myModalMessage .modal-body`);
+    bodyModal.innerText = body
+    myModalShow.show();
+  }
+  function modalHide() {
+    var modalElement = document.getElementById('myModalMessage');
+  var modal = bootstrap.Modal.getInstance(modalElement); // Obtener la instancia del modal
+  if(modal) {
+    modal.hide(); // Ocultar el modal si existe una instancia
+  }
+  }
+  /* const modal = `
+  <div class="modal" tabindex="-1" id="myModalMessage">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" hidden></button>
+          </div>
+          <div class="modal-body">
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>`
+    window.addEventListener('load', loadModal);
+    function loadModal() {
+        let body = document.querySelector('body')
+      const container = document.createElement('div');
+      container.innerHTML = modal;
+      body.appendChild(container)
+    } */
 /* Conditions */
 function isEquipo(event) {
     let data;

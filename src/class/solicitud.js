@@ -46,4 +46,7 @@ class Solicitud {
             
         }
     }
+    static canMadeSolicitud() {
+        return hasUser
+    }
 }
