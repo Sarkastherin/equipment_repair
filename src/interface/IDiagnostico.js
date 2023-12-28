@@ -1,7 +1,6 @@
 const DataFormDiagnostico = {};
 
 async function openDiagnostico(event) {
-    
     try {
         if(Diagnostico.canMadeDiagnostico()) {
             activeLinks(event)
@@ -11,7 +10,7 @@ async function openDiagnostico(event) {
             await loadUsuarios('atiende'); 
         }
         else {
-            console.log('Usted no tiene los permisos requeridos')
+            await loadMessageDenied()
         }  
       } catch (e) {
         console.log(e)
@@ -19,8 +18,8 @@ async function openDiagnostico(event) {
 }
 async function initializeForm(event) {
     try {
-        const hasSolicitud = await Solicitud.hasSolicitud(event)
-        const hasDiagnostico = await Diagnostico.hasDiagnostico(event)
+        const hasSolicitud = await Solicitud.hasSolicitud(event,false)
+        const hasDiagnostico = await Diagnostico.hasDiagnostico(event, false)
         if (!hasSolicitud) {
             console.log('Solicitud de reparación no existe')
         }

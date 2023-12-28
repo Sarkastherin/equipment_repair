@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Sarkastherin/equipment_repair/issues"
   },
-  "homepage": "https://github.com/Sarkastherin/equipment_repair#readme"
+  "homepage": "https://github.com/Sarkastherin/equipment_repair#readme",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8"
+  }
 }

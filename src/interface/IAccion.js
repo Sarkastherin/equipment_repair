@@ -10,7 +10,7 @@ async function openAccion(event) {
             await loadUsuarios('responsable');
         }
         else {
-            console.log('Usted no tiene los permisos requeridos')
+            await loadMessageDenied()
         }
     } catch (e) {
         console.log(e)
@@ -18,9 +18,9 @@ async function openAccion(event) {
 }
 async function initializeFormAccion(event) {
     try {
-        const hasSolicitud = await Solicitud.hasSolicitud(event)
-        const hasDiagnostico = await Diagnostico.hasDiagnostico(event)
-        const hasAccion = await Accion.hasAccion(event)
+        const hasSolicitud = await Solicitud.hasSolicitud(event,false)
+        const hasDiagnostico = await Diagnostico.hasDiagnostico(event, false)
+        const hasAccion = await Accion.hasAccion(event, false)
         if (!hasSolicitud) {
             console.log('Solicitud de reparación no existe')
         }

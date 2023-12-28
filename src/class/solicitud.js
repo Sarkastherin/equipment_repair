@@ -49,4 +49,13 @@ class Solicitud {
     static canMadeSolicitud() {
         return hasUser
     }
+    static async getSolicitudes() {
+        try {
+            let response = await loadedResourses(sheetSolicitud);
+            let solicitudes = arrayToObject(response)
+            return solicitudes
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

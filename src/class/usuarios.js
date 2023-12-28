@@ -78,4 +78,9 @@ class Usuario {
     static async isValidEmail(email) {
         return this.hasUser(email)
     }
+    static async isAdmi() {
+        let user = await this.getUserByEmail(usuario.email);
+        let isAdmi = user.rol === 'Administrador';
+        return isAdmi
+    }
 }

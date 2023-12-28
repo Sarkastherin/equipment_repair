@@ -2,10 +2,15 @@ const DataFormUsuario = {};
 let email;
 
 async function openUsuario(event) {
-    activeLinks(event)
     try {
-        await loadPage('../src/html/usuarios.html');
-        listenerChangeEvent()
+        if (await Usuario.isAdmi()){
+            activeLinks(event)
+            await loadPage('../src/html/usuarios.html');
+            listenerChangeEvent() 
+        }
+        else {
+            await loadMessageDenied()
+        }
       } catch (e) {
         console.log(e)
       }

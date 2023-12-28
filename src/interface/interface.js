@@ -1,4 +1,20 @@
 /* Load Inputs */
+async function loadEquipos() {
+    try {
+        let equiposList = await Equipo.getEquipos();
+        let input = document.getElementById('codigo_maqOptions');
+        input.innerHTML = '<option selected value="">Seleccione una opción</option>';
+        equiposList.map(item => {
+            let option = document.createElement('option');
+            let textNode = document.createTextNode(item.nombre_equipo);
+            option.appendChild(textNode);
+            option.value = item.codigo;
+            input.appendChild(option)
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
 async function loadSectores() {
     try {
         let sectorNames = await Sector.getSectores();
@@ -27,6 +43,7 @@ async function loadUsuarios(idInput) {
             option.value = user.alias;
             input.appendChild(option)
         })
+        input.value = usuario.alias
     } catch (e) {
         console.log(e)
     }
@@ -42,7 +59,7 @@ async function loadSubsector(event) {
             let option = document.createElement('option');
             let textNode = document.createTextNode(subsector.subsector);
             option.appendChild(textNode);
-            option.value = subsector.id_sector;
+            option.value = subsector.id;
             input.appendChild(option)
         })
     } catch (e) {
@@ -120,27 +137,7 @@ function modalShow(titulo,body){
     modal.hide(); // Ocultar el modal si existe una instancia
   }
   }
-  /* const modal = `
-  <div class="modal" tabindex="-1" id="myModalMessage">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" hidden></button>
-          </div>
-          <div class="modal-body">
-            <p></p>
-          </div>
-        </div>
-      </div>
-    </div>`
-    window.addEventListener('load', loadModal);
-    function loadModal() {
-        let body = document.querySelector('body')
-      const container = document.createElement('div');
-      container.innerHTML = modal;
-      body.appendChild(container)
-    } */
+ 
 /* Conditions */
 function isEquipo(event) {
     let data;
@@ -153,6 +150,23 @@ function isEquipo(event) {
         data = {codigo_maq: '',nombre_equipo: '',}
     }
     loadInputsById(data,!isEquipo)
+}
+async function loadMessageDenied() {
+    try {
+       await loadPage('./html/deniedPermission.html');
+      let userList = await Usuario.getUsuarios();
+      let ul = document.createElement('ul');
+      let admList = userList.filter(item => item.rol === 'Administrador')
+      admList.map(item => {
+        let li = document.createElement('li');
+        let text = document.createTextNode(item.nombreCompleto)
+        li.appendChild(text)
+        ul.appendChild(li);
+        interface.appendChild(ul)
+      }) 
+    } catch (e) {
+        console.log(e)
+    }
 }
 /* Validations */
 function isValidForm(event, form) {

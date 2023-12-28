@@ -65,4 +65,13 @@ class Equipo {
             console.log(e)
         }
     }
+    static async getEquipos() {
+        try {
+            let response = await loadedResourses(sheetEquipos);
+            let equipos = arrayToObject(response);
+            return equipos
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

@@ -20,9 +20,11 @@ class Entrega {
             console.log(e)
         }
     }
-    static async hasEntrega(event) {
+    static async hasEntrega(event,id_solicitud) {
+        let id;
         try {
-            let id = event.target.value;
+            if(event) {id = event.target.value;}
+            else {id = id_solicitud}
             let entregaList = await loadedResourses(sheetEntrega);
             entregaList = arrayToObject(entregaList);
             let result = entregaList.some(item => item.id_solicitud === id)

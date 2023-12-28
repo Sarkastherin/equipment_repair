@@ -23,9 +23,11 @@ class Accion {
             console.log(e)
         }
     }
-    static async hasAccion(event) {
+    static async hasAccion(event,id_solicitud) {
+        let id;
         try {
-            let id = event.target.value;
+            if(event) {id = event.target.value;}
+            else {id = id_solicitud}
             let accionList = await loadedResourses(sheetAccion);
             accionList = arrayToObject(accionList);
             let result = accionList.some(item => item.id_solicitud === id)

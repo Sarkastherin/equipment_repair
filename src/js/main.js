@@ -1,4 +1,4 @@
-const sheetSolicitud = 'Solicitud!A1:H';
+const sheetSolicitud = 'Solicitud!A1:I';
 const sheetDiagnostico = 'Diagnóstico!A1:E';
 const sheetAccion = 'Acción!A1:G';
 const sheetEntrega = 'Entrega!A1:D';
@@ -24,15 +24,28 @@ async function loadedResourses(range) {
   }
 }
 async function loadedWindow() {
+  //await openRegister(event);
+  //await openRegistro();
   try {
     let email = await getEmail();
     hasUser = await Usuario.hasUser(email);
     usuario = await Usuario.getUserByEmail(email);
     if (hasUser) {
-      await openInicio();
+      await loadPage('../src/html/card-register.html');
+      //await openInicio();
     }
     else {
-      console.log('No tiene usuario')
+      await loadPage('./html/failedMessage.html');
+      let userList = await Usuario.getUsuarios();
+      let ul = document.createElement('ul');
+      let admList = userList.filter(item => item.rol === 'Administrador')
+      admList.map(item => {
+        let li = document.createElement('li');
+        let text = document.createTextNode(item.nombreCompleto)
+        li.appendChild(text)
+        ul.appendChild(li);
+        interface.appendChild(ul)
+      })
     }
   } catch (e) {
     console.log(e)
@@ -72,7 +85,7 @@ async function getHeaders(range) {
 
 function getFormatDate(date, withHours) {
   if (date) {
-    date = date.split('-');
+    date = date.includes('/') ? date.split('/') : date.split('-')
     date = new Date(date[0], date[1] - 1, date[2])
   }
   else {
@@ -109,12 +122,12 @@ async function createId(range) {
 
   }
 }
-async function loadPage(srcPage) {
+async function loadPage(srcPage,body = interface) {
   let response;
   try {
     response = await fetch(srcPage);
     response = await response.text();
-    interface.innerHTML = response;
+    body.innerHTML = response;
   } catch (e) {
     console.log(e)
   }

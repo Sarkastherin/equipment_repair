@@ -23,9 +23,11 @@ class Diagnostico {
             console.log(e)
         }
     }
-    static async hasDiagnostico(event) {
+    static async hasDiagnostico(event,id_solicitud) {
+        let id;
         try {
-            let id = event.target.value;
+            if(event) {id = event.target.value;}
+            else {id = id_solicitud}
             let diagnosticList = await loadedResourses(sheetDiagnostico);
             diagnosticList = arrayToObject(diagnosticList);
             let result = diagnosticList.some(item => item.id_solicitud === id)
@@ -46,5 +48,14 @@ class Diagnostico {
     }
     static canMadeDiagnostico() {
         return hasUser && (usuario.rol == 'Usuario B' || usuario.rol == 'Administrador')
+    }
+    static async getDiagnosticos() {
+        try {
+            let response = await loadedResourses(sheetDiagnostico);
+            let diagnostico = arrayToObject(response)
+            return diagnostico
+        } catch (e) {
+            console.log(e)
+        }
     }
 }

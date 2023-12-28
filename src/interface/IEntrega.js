@@ -1,16 +1,16 @@
 const DataFormEntrega = {};
 
 async function openEntrega(event) {
-    activeLinks(event)
     try {
         if(Entrega.canMadeEntrega()) {
+            activeLinks(event)
             await loadPage('../src/html/entrega.html');  
             await loadSectores();
             await loadSubsectorList();
             await loadUsuarios('responsable_entrega'); 
         }
         else {
-            console.log('Usted no tiene los permisos requeridos')
+            await loadMessageDenied()
         }
       } catch (e) {
         console.log(e)
@@ -18,10 +18,10 @@ async function openEntrega(event) {
 }
 async function initializeFormEntrega(event) {
     try {
-        const hasSolicitud = await Solicitud.hasSolicitud(event)
-        const hasDiagnostico = await Diagnostico.hasDiagnostico(event)
-        const hasAccion = await Accion.hasAccion(event)
-        const hasEntrega = await Entrega.hasEntrega(event)
+        const hasSolicitud = await Solicitud.hasSolicitud(event, false)
+        const hasDiagnostico = await Diagnostico.hasDiagnostico(event, false)
+        const hasAccion = await Accion.hasAccion(event, false)
+        const hasEntrega = await Entrega.hasEntrega(event, false)
         if (!hasSolicitud) {
             console.log('Solicitud de reparación no existe')
         }

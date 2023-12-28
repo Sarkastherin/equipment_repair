@@ -1,17 +1,23 @@
 const DataFormEquipo = {};
-
 let codigo;
 
 async function openEquipo(event) {
-    activeLinks(event)
     try {
-        await loadPage('../src/html/equipos.html');
-        listenerChangeEvent()
+        if (await Usuario.isAdmi()){
+            activeLinks(event)
+            await loadPage('../src/html/equipos.html');
+            listenerChangeEvent() 
+        }
+        else {
+            await loadMessageDenied()
+        }
       } catch (e) {
         console.log(e)
       }
 }
+
 function initilizeForAction(event) {
+    
     codigo =document.getElementById('codigo')
     let action = event.target.id;
     let btnSubmit = document.getElementById('btnSubmit');
@@ -26,6 +32,7 @@ function initilizeForAction(event) {
     let abled = document.querySelectorAll('.save-equipo');
     abled.forEach(item => item.value = '') 
 }
+
 async function canUseCodigo(event) {
     try {
         let abled = document.querySelectorAll('[required]');
@@ -44,6 +51,7 @@ async function canUseCodigo(event) {
         console.log(e)
     }
 }
+
 async function getEquipo(event) {
     try {
         codigo = event.target.value;
@@ -68,6 +76,7 @@ async function saveEquipo(event) {
     }
     event.preventDefault()
 }
+
 async function updateEquipo(event) {
     let form = document.querySelector('form');
     let isValid = isValidForm(event, form);

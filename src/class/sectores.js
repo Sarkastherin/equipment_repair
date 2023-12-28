@@ -12,6 +12,15 @@ class Sector {
             return sectores
         } catch (e) {console.log(e)}
     }
+    static async getSectorById(id) {
+        try {
+            let response = await this.getSectores();
+            let sector = response.find(item => item.id === id);
+            return sector
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     static async getSubsectorBySector(sector) {
         let response;
