@@ -21,13 +21,14 @@ class Subsector {
             let subsectores = arrayToObject(response);
             return subsectores
         } catch (e) {
-
+            console.log(e)
         }
     }
     static async getSubsectorById(id) {
         try {
+            console.log(id)
             let response = await this.getSubsectores()
-            let subsector = response.filter(item => item.id === id)
+            let subsector = response.find(item => item.id === id)
             return subsector.nombre
         } catch (e) {
             console.log(e)
