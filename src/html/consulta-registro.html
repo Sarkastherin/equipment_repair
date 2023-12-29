@@ -36,8 +36,8 @@
     <div class="offcanvas-body">
         <form class="row g-1" id="formFilter">
             <div class="col-12">
-                <label for="estado" class="col-form-label col-form-label-sm">Estado</label>
-                <select id="estado" class="form-select form-select-sm filter-value">
+                <label for="estado_filter" class="col-form-label col-form-label-sm">Estado</label>
+                <select id="estado_filter" name="estado" class="form-select form-select-sm filter-value">
                   <option selected value="">Ninguno</option>
                   <option value="Iniciado">Iniciado</option>
                   <option value="Diagnósticado">Diagnósticado</option>
@@ -46,21 +46,21 @@
                 </select>
             </div>
             <div class="col-12">
-                <label for="sector" class="col-form-label col-form-label-sm">Sector</label>
-                <select class="form-select form-select-sm filter-value" name="sector" id="sector"
-                    onchange="loadSubsector(event)" required>
+                <label for="id_sector_filter" class="col-form-label col-form-label-sm">Sector</label>
+                <select class="form-select form-select-sm filter-value" id="id_sector_filter" name="id_sector"
+                    onchange="loadSubsector(event, 'id_subsector_filter')" required>
                     <option selected value="">Ninguno</option>
                 </select>
             </div>
             <div class="col-12">
-                <label for="subsector" class="col-form-label col-form-label-sm">Subsector</label>
-                <select class="form-select form-select-sm filter-value" name="subsector" id="subsector" required>
+                <label for="id_subsector_filter" class="col-form-label col-form-label-sm">Subsector</label>
+                <select class="form-select form-select-sm filter-value" name="id_subsector" id="id_subsector_filter" required>
                     <option selected value="">Ninguno</option>
                 </select>
             </div>
             <div class="col-12">
-                <label for="codigo_maq" class="col-form-label col-form-label-sm">Equipo/Máquina</label>
-                <input class="form-control form-control-sm filter-value" list="codigo_maqOptions" id="codigo_maq" placeholder="Type to search...">
+                <label for="codigo_maq_filter" class="col-form-label col-form-label-sm">Equipo/Máquina</label>
+                <input class="form-control form-control-sm filter-value" name="codigo_maq" list="codigo_maqOptions" id="codigo_maq_filter" placeholder="Type to search...">
                 <datalist id="codigo_maqOptions">
                 </datalist>
             </div>
@@ -78,9 +78,9 @@
           </form>
     </div>
 </div>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+    <h5 class="offcanvas-title" id="offcanvasRightLabel">Solicitud de Reparación</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body" id="offcanvasBody">

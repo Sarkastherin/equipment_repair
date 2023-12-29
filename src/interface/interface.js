@@ -1,8 +1,8 @@
 /* Load Inputs */
-async function loadEquipos() {
+async function loadEquipos(inputId = 'codigo_maqOptions' ) {
     try {
         let equiposList = await Equipo.getEquipos();
-        let input = document.getElementById('codigo_maqOptions');
+        let input = document.getElementById(inputId);
         input.innerHTML = '<option selected value="">Seleccione una opción</option>';
         equiposList.map(item => {
             let option = document.createElement('option');
@@ -15,14 +15,14 @@ async function loadEquipos() {
         console.log(e)
     }
 }
-async function loadSectores() {
+async function loadSectores(inputId = 'id_sector') {
     try {
         let sectorNames = await Sector.getSectores();
-        let input = document.getElementById('sector');
+        let input = document.getElementById(inputId);
         input.innerHTML = '<option selected value="">Seleccione una opción</option>'
         sectorNames.map(item => {
             let option = document.createElement('option');
-            let textNode = document.createTextNode(item.sector);
+            let textNode = document.createTextNode(item.nombre);
             option.appendChild(textNode);
             option.value = item.id;
             input.appendChild(option)
@@ -48,16 +48,16 @@ async function loadUsuarios(idInput) {
         console.log(e)
     }
 }
-async function loadSubsector(event) {
+async function loadSubsector(event, inputId = 'id_subsector') {
     try {
         let id_sector = event.target.value
-        let subsectores = await Subsector.getSubsector(id_sector)
-        input = document.getElementById('subsector')
+        let subsectores = await Subsector.getSubsectoresBySector(id_sector)
+        let input = document.getElementById(inputId)
 
         input.innerHTML = '<option selected value="">Seleccione una opción</option>'
         subsectores.map(subsector => {
             let option = document.createElement('option');
-            let textNode = document.createTextNode(subsector.subsector);
+            let textNode = document.createTextNode(subsector.nombre);
             option.appendChild(textNode);
             option.value = subsector.id;
             input.appendChild(option)
@@ -67,15 +67,15 @@ async function loadSubsector(event) {
     }
 
 }
-async function loadSubsectorList() {
+async function loadSubsectorList(inputId='id_subsector') {
     try {
         let subsectores = await Subsector.getSubsectores()
-        input = document.getElementById('subsector')
+        input = document.getElementById(inputId)
 
         input.innerHTML = '<option selected value="">Seleccione una opción</option>'
         subsectores.map(item => {
             let option = document.createElement('option');
-            let textNode = document.createTextNode(item.subsector);
+            let textNode = document.createTextNode(item.nombre);
             option.appendChild(textNode);
             option.value = item.id;
             input.appendChild(option)
@@ -98,26 +98,6 @@ async function loadUsuario(event,isDisabled = true) {
         let email = event.target.value
         let usuario = await Usuario.getUserByEmail(email)//Equipo.getEquipoByCod(codigo);
         loadInputsById(usuario, isDisabled)
-    } catch (e) {
-        console.log(e)
-    }
-}
-async function loadSolicitud(event) {
-    try {
-        let id = event.target.value;
-        let solicitud = await Solicitud.getSolicitudById(id);
-        let equipo = await Equipo.getEquipoByCod(solicitud.codigo_maq);
-        solicitud['nombre_equipo'] = equipo.nombre_equipo;
-        loadInputsById(solicitud,true);
-    } catch (e) {
-        console.log(e)
-    }
-}
-async function loadDiagnostico(event) {
-    try {
-        let id = event.target.value;
-        let diagnostico = await Diagnostico.getDiagnosticoById(id);
-        loadInputsById(diagnostico,true)
     } catch (e) {
         console.log(e)
     }

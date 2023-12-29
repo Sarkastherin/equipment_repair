@@ -8,14 +8,14 @@
             <input type="number" class="form-control form-control-sm load-inpu" id="id_solicitud" onchange="initializeFormAccion(event)" required>
         </div>
         <div class="col-5">
-            <label for="sector" class="col-form-label col-form-label-sm">Sector</label>
-            <select class="form-select form-select-sm save-solicitud" name="sector" id="sector" required disabled>
+            <label for="id_sector" class="col-form-label col-form-label-sm">Sector</label>
+            <select class="form-select form-select-sm save-solicitud" id="id_sector" required disabled>
                 <option selected value=""></option>
             </select>
         </div>
         <div class="col-5">
-            <label for="subsector" class="col-form-label col-form-label-sm">Subsector</label>
-            <select class="form-select form-select-sm save-solicitud" name="subsector" id="subsector" required disabled>
+            <label for="id_subsector" class="col-form-label col-form-label-sm">Subsector</label>
+            <select class="form-select form-select-sm save-solicitud" name="subsector" id="id_subsector" required disabled>
                 <option selected value=""></option>
             </select>
         </div>
@@ -28,29 +28,38 @@
             <textarea class="form-control form-control-sm" name="diagnostico" id="diagnostico" autocomplete="off" rows="3" required disabled></textarea>
         </div>
     </div>
-    <div class="row g-1 display-none" id="accionForm">
+    <div class="row g-1 display-none" id="reparacionForm">
         <div class="col-12">
-            <label for="accion" class="col-form-label col-form-label-sm">Acción</label>
-            <textarea class="form-control form-control-sm" name="accion" id="accion" autocomplete="off" rows="3" required></textarea>
+            <label for="actividades_reparacion" class="col-form-label col-form-label-sm">Actividades para la reparacion</label>
+            <textarea class="form-control form-control-sm update" name="actividades_reparacion" id="actividades_reparacion" autocomplete="off" rows="3" required></textarea>
         </div>
         <div class="col-5">
             <label for="horas_hombre" class="col-form-label col-form-label-sm">Horas hombre</label>
-            <input type="time" class="form-control form-control-sm" aria-describedby="descripcionMaquina" name="horas_hombre" id="horas_hombre"required>
+            <input type="time" class="form-control form-control-sm update" aria-describedby="descripcionMaquina" name="horas_hombre" id="horas_hombre"required>
         </div>
         <div class="col-7">
-            <label for="fecha_entrega_pannol" class="col-form-label col-form-label-sm">Fecha entrega a Depósito</label>
-            <input type="date" class="form-control form-control-sm" aria-describedby="descripcionMaquina" name="fecha_entrega_pannol" id="fecha_entrega_pannol"required>
+            <label for="fecha_entrega_deposito" class="col-form-label col-form-label-sm">Devolución a depósito</label>
+            <input type="date" class="form-control form-control-sm update" id="fecha_entrega_deposito"required>
         </div>
         <div class="col-12">
-            <label for="responsable" class="col-form-label col-form-label-sm">Responsable</label>
-            <select class="form-select form-select-sm" name="responsable" id="responsable" required>
+            <label for="responsable_reparacion" class="col-form-label col-form-label-sm">Responsable reparacion</label>
+            <select class="form-select form-select-sm update" id="responsable_reparacion" required>
                 <option selected value=""></option>
             </select>
         </div>
     </div>
     <div class="row g-1 btn-next-submit text-center">
         <div class="col">
-            <button type="button" class="btn btn-success" onclick="saveAccion(event)">Siguiente</button>
+            <button type="button" class="btn btn-success" onclick="updateRegisterPart(event)">Siguiente</button>
         </div>
     </div>
 </form>
+<table class="table">
+    
+    <thead>
+        <tr>
+            <th>Id</th>
+        </tr>
+    </thead>
+    <tbody id="idsForReparacion"></tbody>
+</table>

@@ -55,6 +55,14 @@ class Equipo {
             console.log(e)
         } 
     }
+    static async getNameEquipo(codigo) {
+        try {
+            let response = await this.getEquipoByCod(codigo);
+            return response.nombre_equipo
+        } catch (e) {
+            console.log(e)
+        } 
+    }
     static async isValidCodigo(codigo) {
         try {
             let response = await loadedResourses(sheetEquipos)

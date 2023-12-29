@@ -6,8 +6,7 @@
             <div class="row g-1">
                 <div class="col-12">
                     <label for="tipo_reparacion" class="col-form-label col-form-label-sm">Tipo de reparación</label>
-                    <select class="form-select form-select-sm save-solicitud" name="tipo_reparacion"
-                        id="tipo_reparacion" onchange="isEquipo(event)" required>
+                    <select class="form-select form-select-sm save-solicitud" id="tipo_reparacion" onchange="isEquipo(event)" required>
                         <option selected value=""></option>
                         <option value="Equipos y maquinarias">Equipos y maquinarias</option>
                         <option value="Instalaciones">Instalaciones</option>
@@ -15,15 +14,15 @@
                     </select>
                 </div>
                 <div class="col-6">
-                    <label for="sector" class="col-form-label col-form-label-sm">Sector</label>
-                    <select class="form-select form-select-sm save-solicitud" name="sector" id="sector"
+                    <label for="id_sector" class="col-form-label col-form-label-sm">Sector</label>
+                    <select class="form-select form-select-sm save-solicitud" id="id_sector"
                         onchange="loadSubsector(event)" required>
                         <option selected value=""></option>
                     </select>
                 </div>
                 <div class="col-6">
-                    <label for="subsector" class="col-form-label col-form-label-sm">Subsector</label>
-                    <select class="form-select form-select-sm save-solicitud" name="subsector" id="subsector" required>
+                    <label for="id_subsector" class="col-form-label col-form-label-sm">Subsector</label>
+                    <select class="form-select form-select-sm save-solicitud" id="id_subsector" required>
                         <option selected value=""></option>
                     </select>
                 </div>
@@ -53,8 +52,8 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label for="solicita" class="col-form-label col-form-label-sm">Solicita</label>
-                    <select class="form-select form-select-sm save-solicitud" name="solicita" id="solicita" required>
+                    <label for="quien_solicita" class="col-form-label col-form-label-sm">Quien_solicita</label>
+                    <select class="form-select form-select-sm save-solicitud" id="quien_solicita" required>
                         <option selected value=""></option>
                     </select>
                 </div>

@@ -20,14 +20,14 @@ function getBodySolicitud(data) {
     <h3>Solicitud de reparación</h3>
     <ul>
       <li><strong>Id: </strong> ${data.id}</li>
-      <li><strong>Fecha: </strong> ${data.fecha}</li>
-      <li><strong>Sector: </strong> ${data.sector}</li>
-      <li><strong>Subsector: </strong> ${data.subsector}</li>
+      <li><strong>Fecha: </strong> ${data.fecha_solicitud}</li>
+      <li><strong>Sector: </strong> ${data.nombre_sector}</li>
+      <li><strong>Subsector: </strong> ${data.nombre_subsector}</li>
       <li><strong>Código máquina: </strong> ${data.codigo_maq}</li>
       <li><strong>Nombre máquina: </strong> ${data.nombre_equipo}</li>
       <li><strong>Prioridad: </strong> ${data.prioridad}</li>
       <li><strong>Situación: </strong> ${data.situacion}.</li>
-      <li><strong>Solicita: </strong> ${data.solicita}</li>
+      <li><strong>Solicita: </strong> ${data.quien_solicita}</li>
     </ul>`
   return body
 }

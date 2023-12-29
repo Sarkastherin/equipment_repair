@@ -5,17 +5,17 @@
     <div class="row g-1">
         <div class="col-4">
             <label for="id_solicitud" class="col-form-label col-form-label-sm t">Id reparación</label>
-            <input type="number" class="form-control form-control-sm load-inpu" id="id_solicitud" onchange="initializeForm(event)" required>
+            <input type="number" class="form-control form-control-sm load-inpu" id="id_solicitud" onchange="initializeForm(event)">
         </div>
         <div class="col-8">
-            <label for="sector" class="col-form-label col-form-label-sm">Sector</label>
-            <select class="form-select form-select-sm save-solicitud" name="sector" id="sector" required disabled>
+            <label for="id_sector" class="col-form-label col-form-label-sm">Sector</label>
+            <select class="form-select form-select-sm save-solicitud" id="id_sector" required disabled>
                 <option selected value=""></option>
             </select>
         </div>
         <div class="col-6">
-            <label for="subsector" class="col-form-label col-form-label-sm">Subsector</label>
-            <select class="form-select form-select-sm save-solicitud" name="subsector" id="subsector" required disabled>
+            <label for="id_subsector" class="col-form-label col-form-label-sm">Subsector</label>
+            <select class="form-select form-select-sm save-solicitud" id="id_subsector" required disabled>
                 <option selected value=""></option>
             </select>
         </div>
@@ -31,18 +31,28 @@
     <div class="row g-1 display-none" id="diagnosticForm">
         <div class="col">
             <label for="diagnostico" class="col-form-label col-form-label-sm">Diagnóstico</label>
-            <textarea class="form-control form-control-sm" name="diagnostico" id="diagnostico" autocomplete="off" rows="3" required></textarea>
+            <textarea class="form-control form-control-sm update" name="diagnostico" id="diagnostico" autocomplete="off" rows="3" required></textarea>
         </div>
         <div class="col-12">
-            <label for="atiende" class="col-form-label col-form-label-sm">Atiende</label>
-            <select class="form-select form-select-sm" name="atiende" id="atiende" required>
+            <label for="quien_diagnostica" class="col-form-label col-form-label-sm">Quien diagnostica</label>
+            <select class="form-select form-select-sm update" id="quien_diagnostica" required>
                 <option selected value=""></option>
             </select>
         </div>
     </div>
     <div class="row g-1 btn-next-submit text-center">
         <div class="col">
-            <button type="button" class="btn btn-success" onclick="saveDiagnostic(event)">Siguiente</button>
+            <button type="button" class="btn btn-success" onclick="updateDiagnosticPart(event)">Siguiente</button>
         </div>
     </div>
 </form>
+<p class="lead text-center my-3">Reparaciones pendientes</p>
+<table class="table">
+    
+    <thead>
+        <tr>
+            <th>Id</th>
+        </tr>
+    </thead>
+    <tbody id="idsForDiagnostic"></tbody>
+</table>

@@ -16,7 +16,7 @@ class Sector {
         try {
             let response = await this.getSectores();
             let sector = response.find(item => item.id === id);
-            return sector
+            return sector.nombre
         } catch (e) {
             console.log(e)
         }

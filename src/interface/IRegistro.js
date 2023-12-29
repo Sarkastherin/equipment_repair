@@ -11,26 +11,31 @@ const FilterValues = {}
 async function openRegistro() {
     try {
         await loadPage('../src/html/consulta-registro.html')
-        const tableBodyRegister = document.getElementById('tableBodyRegister')
         prevButton = document.getElementById('prevPage');
         nextButton = document.getElementById('nextPage');
         footPage = document.getElementById('footPage');
-        loadSectores()
         loadEquipos()
+        loadSectores('id_sector_filter')
+        
         let sectoresList = await Sector.getSectores();
         let subsectoresList = await Subsector.getSubsectores();
-        let solicitudesList = await Solicitud.getSolicitudes();
-         solicitudesList.map(item => {
-            const index = item.fecha.indexOf(' ')
-            item.fecha = item.fecha.substr(0,index)
-            let dateSplit = item.fecha.split('/') 
-            item.date = new Date(dateSplit[2],dateSplit[1]-1,dateSplit[0])
-            item.nombreSectores = sectoresList.find(element => element.id === item.sector).sector;
-            item.nombreSubsectores = subsectoresList.find(element => element.id === item.subsector).subsector;        
+        let equiposList = await Equipo.getEquipos()
+        let registro = await Registro.getData();
+         registro.map(item => {
+            if(item.fecha_solicitud && item.id_sector && item.id_subsector) {
+               const index = item.fecha_solicitud.indexOf(' ');
+                item.fecha = item.fecha_solicitud.substr(0,index);
+                let dateSplit = item.fecha.split('/');
+                item.date = new Date(dateSplit[2],dateSplit[1]-1,dateSplit[0]);
+                item.nombreSectores = sectoresList.find(elem => elem.id == item.id_sector).nombre;
+                item.nombreSubsectores = subsectoresList.find(elem => elem.id == item.id_subsector).nombre;
+                item.nombre_equipo = equiposList.find(elem => elem.codigo == item.codigo_maq).nombre_equipo
+            } 
          })
-         dataReverse = solicitudesList.reverse()
+         dataReverse = registro.reverse();
          loadTablePage(currentPage,dataReverse)
     } catch (e) {
+        console.log(e)
 
     }
 }
@@ -81,7 +86,7 @@ async function filter(event) {
     event.preventDefault();
     const formFilter = document.getElementById('formFilter');
     const inputsFilter = formFilter.querySelectorAll('.filter-value');
-    inputsFilter.forEach(item => {FilterValues[item.id] = item.value});
+    inputsFilter.forEach(item => {FilterValues[item.name] = item.value});
     dataFilter = getDataFiltered(dataReverse, FilterValues);
     let from = document.getElementById('fromDate').value;
     let to = document.getElementById('toDate').value;
@@ -137,13 +142,42 @@ function getDataFiltered(data, filtro) {
     });
 }
 async function openRegister(event) {
-    let id = '1'//event.target.id;
-    //let offcanvasBody = document.getElementById('offcanvasBody')
-    //await loadPage('../src/html/card-register.html',offcanvasBody);
+    let id = event.target.id;
+    let offcanvasBody = document.getElementById('offcanvasBody')
+    await loadPage('../src/html/card-register.html',offcanvasBody);
+    let loaded = document.getElementById('loaded')
+    await loadPage('../src/html/loaded.html',loaded);
     await loadSectores()
     await loadSubsectorList()
-    await loadUsuarios('solicita')
-    let dataSolicitud = await Solicitud.getSolicitudById(id)
-    console.log(dataSolicitud)
-    //await loadUsuarios('solicita')
+    await loadUsuarios('quien_solicita')
+    await loadUsuarios('quien_diagnostica')
+    await loadUsuarios('responsable_reparacion')
+    await loadUsuarios('responsable_entrega')
+    let data = dataReverse.find(item => item.id === id);
+    data.fecha_solicitud = dateForForm(data.fecha_solicitud)
+    data.fecha_diagnostico = dateForForm(data.fecha_diagnostico)
+    data.fecha_reparacion = dateForForm(data.fecha_reparacion)
+    data.fecha_entrega_deposito = dateForForm(data.fecha_entrega_deposito)
+    data.fecha_devolucion = dateForForm(data.fecha_devolucion)    
+    loadInputsById(data,false)
+    document.getElementById('idField').innerText = id
+    let disabled = document.querySelectorAll('.card-register');
+    disabled.forEach(item => item.setAttribute('disabled',''));
+    document.getElementById('bodyCard').removeAttribute('hidden')
+    loaded.setAttribute('hidden','')
+    
+}
+function dateForForm(date) {
+    let newDate;
+    if(date!=''){
+        if(date.indexOf(' ')>=0) {
+           let index = date.indexOf(' '); 
+           date = date.substr(0,index)
+        }
+        date = date.split('/');
+        newDate = `${date[2]}-${date[1]}-${date[0]}`
+    }
+    else { newDate=''}
+    return newDate  
+    
 }

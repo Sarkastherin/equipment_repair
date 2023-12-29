@@ -1,7 +1,12 @@
-const sheetSolicitud = 'Solicitud!A1:I';
-const sheetDiagnostico = 'Diagnóstico!A1:E';
-const sheetAccion = 'Acción!A1:G';
-const sheetEntrega = 'Entrega!A1:D';
+const sheetRegistro = 'Registro!A2:T';
+let id;
+window.addEventListener("load", () => {
+  loadPage('./html/loaded.html')
+});
+//const sheetSolicitud = 'Solicitud!A1:I';
+//const sheetDiagnostico = 'Diagnóstico!A1:E';
+//const sheetAccion = 'Acción!A1:G';
+//const sheetEntrega = 'Entrega!A1:D';
 const sheetEquipos = 'Equipos!A1:H';
 const sheetSectores = 'Sectores!A1:B';
 const sheetSubsectores = 'Subsectores!A1:C';
@@ -24,15 +29,12 @@ async function loadedResourses(range) {
   }
 }
 async function loadedWindow() {
-  //await openRegister(event);
-  //await openRegistro();
   try {
     let email = await getEmail();
     hasUser = await Usuario.hasUser(email);
     usuario = await Usuario.getUserByEmail(email);
     if (hasUser) {
-      await loadPage('../src/html/card-register.html');
-      //await openInicio();
+      await openInicio();
     }
     else {
       await loadPage('./html/failedMessage.html');
@@ -49,7 +51,6 @@ async function loadedWindow() {
     }
   } catch (e) {
     console.log(e)
-  } finally {
   }
 }
 function arrayToObject(arr) {
@@ -136,7 +137,7 @@ function loadInputsById(data, isDisabled) {
   for (item in data) {
     const input = document.getElementById(item)
     let testData = !!input;
-    if (testData) {
+    if (testData && data[item]!="") {
       input.value = data[item];
       if (isDisabled) { input.setAttribute('disabled', '') }
       else { input.removeAttribute('disabled', '') }

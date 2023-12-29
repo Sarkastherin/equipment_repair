@@ -1,141 +1,140 @@
-<div>
-    <h2>Solicitud de reparación</h2>
-    <div class="row g-1">
-      <div class="col-6"><p class="lead mt-3 mb-0">Solicitud</p></div>
-      <div class="col-6">
-        <p class="lead mt-3 mb-0 text-end">Id: <button type="button" class="btn btn-danger" onclick="openRegister(event)"><i class="bi bi-balloon-heart"></i></button></p>
-      </div>
+<div id="bodyCard" hidden>
+  <div class="row g-1">
+    <div class="col-6">
+      <p class="lead mt-3 mb-0">Solicitud</p>
     </div>
-    <div class="row g-1">
-      <div class="col-5">
-        <label for="fechaSolicitud" class="col-form-label col-form-label-sm" >Fecha de cereación</label>
-        <input type="date" class="form-control form-control-sm" id="fechaSolicitud" autocomplete="off" required
-        />
-      </div>
-      <div class="col">
-        <label for="tipo_reparacion" class="col-form-label col-form-label-sm"
-          >Tipo de reparación</label>
-        <select class="form-select form-select-sm" id="tipo_reparacion" onchange="isEquipo(event)" required>
-          <option selected value=""></option>
-          <option value="Equipos y maquinarias">
-            Equipos y maquinarias
-          </option>
-          <option value="Instalaciones">Instalaciones</option>
-          <option value="Dispositivos">Dispositivos</option>
-        </select>
-      </div>
+    <div class="col-6">
+      <p class="lead mt-3 mb-0 text-end">Id: <strong><span id="idField"></span></strong></p>
     </div>
-    <div class="row g-1">
-      <div class="col-6">
-        <label for="sector" class="col-form-label col-form-label-sm"
-          >Sector</label>
-        <select class="form-select form-select-sm" id="sector" onchange="loadSubsector(event)" required>
-          <option selected value=""></option>
-        </select>
-      </div>
-      <div class="col-6">
-        <label for="subsector" class="col-form-label col-form-label-sm"
-          >Subsector</label>
-        <select class="form-select form-select-sm" name="subsector" id="subsector" required>
-          <option selected value=""></option>
-        </select>
-      </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-5">
+      <label for="fecha_solicitud" class="col-form-label col-form-label-sm">Fecha de cereación</label>
+      <input type="date" class="form-control form-control-sm card-register card-register" id="fecha_solicitud" autocomplete="off" required />
     </div>
-    <div class="row g-1">
-      <div class="col-4">
-        <label for="codigo_maq" class="col-form-label col-form-label-sm"
-          >Cód Máq./Eq.</label>
-        <input type="text" class="form-control form-control-sm" aria-describedby="descripcionMaquina" name="codigo_maq" id="codigo_maq" onchange="loadEquipo(event)" required/>
-      </div>
-      <div class="col">
-        <label for="nombre_equipo" class="col-form-label col-form-label-sm" >Nombre equipo</label>
-        <input class="form-control form-control-sm" id="nombre_equipo" autocomplete="off" required/>
-      </div>
+    <div class="col">
+      <label for="tipo_reparacion" class="col-form-label col-form-label-sm">Tipo de reparación</label>
+      <select class="form-select form-select-sm card-register" id="tipo_reparacion" onchange="isEquipo(event)" required>
+        <option selected value=""></option>
+        <option value="Equipos y maquinarias">Equipos y maquinarias</option>
+        <option value="Instalaciones">Instalaciones</option>
+        <option value="Dispositivos">Dispositivos</option>
+      </select>
     </div>
-    <div class="row g-1">
-      <div class="col-12">
-        <label for="situacion" class="col-form-label col-form-label-sm"
-          >Situación</label>
-        <textarea class="form-control form-control-sm" rows="3" id="situacion" autocomplete="off" required></textarea>
-      </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-6">
+      <label for="id_sector" class="col-form-label col-form-label-sm">Sector</label>
+      <select class="form-select form-select-sm card-register" id="id_sector" onchange="loadSubsector(event)" required>
+        <option selected value=""></option>
+      </select>
     </div>
-    <div class="row g-1">
-      <div class="col-5">
-        <label for="prioridad" class="col-form-label col-form-label-sm" >Prioridad</label>
-        <select class="form-select form-select-sm" name="prioridad" id="prioridad" required>
-          <option selected value=""></option>
-          <option value="Baja">Baja</option>
-          <option value="Media">Media</option>
-          <option value="Alta">Alta</option>
-        </select>
-      </div>
-      <div class="col">
-        <label for="solicita" class="col-form-label col-form-label-sm" >Solicita</label>
-        <select class="form-select form-select-sm" name="solicita" id="solicita" required>
-          <option selected value=""></option>
-        </select>
-      </div>
+    <div class="col-6">
+      <label for="id_subsector" class="col-form-label col-form-label-sm">Subsector</label>
+      <select class="form-select form-select-sm card-register" name="id_subsector" id="id_subsector" required>
+        <option selected value=""></option>
+      </select>
     </div>
-    <div class="row g-1">
-      <p class="lead mt-3 mb-0">Diagnóstico/Revisión</p>
-      <div class="col-12">
-        <label for="diagnostico" class="col-form-label col-form-label-sm" >Diagnóstico</label>
-        <textarea class="form-control form-control-sm" id="diagnostico" rows="3" autocomplete="off" required></textarea>
-      </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-4">
+      <label for="codigo_maq" class="col-form-label col-form-label-sm">Cód Máq./Eq.</label>
+      <input type="text" class="form-control form-control-sm card-register" id="codigo_maq" required/>
     </div>
-    <div class="row g-1">
-      <div class="col-5">
-        <label for="nombre_equipo" class="col-form-label col-form-label-sm" >Fecha de revisión</label>
-        <input type="date" class="form-control form-control-sm" id="nombre_equipo" autocomplete="off" required/>
-      </div>
-      <div class="col">
-        <label for="atiende" class="col-form-label col-form-label-sm" >Atiende</label>
-        <select class="form-select form-select-sm" name="atiende" id="atiende" required>
-          <option selected value=""></option>
-        </select>
-      </div>
+    <div class="col">
+      <label for="nombre_equipo" class="col-form-label col-form-label-sm">Nombre equipo</label>
+      <input class="form-control form-control-sm card-register" id="nombre_equipo" autocomplete="off" required />
     </div>
-    <div class="row g-1">
-      <p class="lead mt-3 mb-0">Reparación</p>
-      <div class="col-5">
-        <label for="nombre_equipo" class="col-form-label col-form-label-sm" >Fecha de reparación</label>
-        <input type="date" class="form-control form-control-sm" id="nombre_equipo" autocomplete="off" required/>
-      </div>
-      <div class="col">
-        <label for="atiende" class="col-form-label col-form-label-sm"
-          >Quien repara</label>
-        <select class="form-select form-select-sm" name="atiende" id="atiende" required>
-          <option selected value=""></option>
-        </select>
-      </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-12">
+      <label for="situacion" class="col-form-label col-form-label-sm">Situación</label>
+      <textarea class="form-control form-control-sm card-register" rows="3" id="situacion" autocomplete="off" required></textarea>
     </div>
-    <div class="row g-1">
-      <div class="col">
-        <label for="accion" class="col-form-label col-form-label-sm" >Acción</label>
-        <textarea class="form-control form-control-sm" name="accion" id="accion" autocomplete="off" rows="3" required></textarea>
-      </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-5">
+      <label for="prioridad" class="col-form-label col-form-label-sm">Prioridad</label>
+      <select class="form-select form-select-sm card-register" name="prioridad" id="prioridad" required>
+        <option selected value=""></option>
+        <option value="Baja">Baja</option>
+        <option value="Media">Media</option>
+        <option value="Alta">Alta</option>
+      </select>
     </div>
-    <div class="row g-1">
-      <div class="col-5">
-          <label for="horas_hombre" class="col-form-label col-form-label-sm">Horas hombre</label>
-          <input type="time" class="form-control form-control-sm" aria-describedby="descripcionMaquina" name="horas_hombre" id="horas_hombre"required>
-      </div>
-      <div class="col">
-          <label for="fecha_entrega_pannol" class="col-form-label col-form-label-sm">Devolución a pañol</label>
-          <input type="date" class="form-control form-control-sm" aria-describedby="descripcionMaquina" name="fecha_entrega_pannol" id="fecha_entrega_pannol"required>
-      </div>
+    <div class="col">
+      <label for="quien_solicita" class="col-form-label col-form-label-sm">Quien solicita</label>
+      <select class="form-select form-select-sm card-register" id="quien_solicita" required>
+        <option selected value=""></option>
+      </select>
+    </div>
+  </div>
+  <div class="row g-1">
+    <p class="lead mt-3 mb-0">Diagnóstico/Revisión</p>
+    <div class="col-12">
+      <label for="diagnostico" class="col-form-label col-form-label-sm">Diagnóstico</label>
+      <textarea class="form-control form-control-sm card-register" id="diagnostico" rows="3" autocomplete="off" required></textarea>
+    </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-5">
+      <label for="fecha_diagnostico" class="col-form-label col-form-label-sm">Fecha de revisión</label>
+      <input type="date" class="form-control form-control-sm card-register" id="fecha_diagnostico" autocomplete="off" required />
+    </div>
+    <div class="col">
+      <label for="quien_diagnostica" class="col-form-label col-form-label-sm">Quien diagnostica</label>
+      <select class="form-select form-select-sm card-register" id="quien_diagnostica" required>
+        <option selected value=""></option>
+      </select>
+    </div>
+  </div>
+  <div class="row g-1">
+    <p class="lead mt-3 mb-0">Reparación</p>
+    <div class="col-5">
+      <label for="fecha_reparacion" class="col-form-label col-form-label-sm">Fecha de reparación</label>
+      <input type="date" class="form-control form-control-sm card-register" id="fecha_reparacion" autocomplete="off" required />
+    </div>
+    <div class="col">
+      <label for="responsable_reparacion" class="col-form-label col-form-label-sm">Quien repara</label>
+      <select class="form-select form-select-sm card-register" id="responsable_reparacion" required>
+        <option selected value=""></option>
+      </select>
+    </div>
+  </div>
+  <div class="row g-1">
+    <div class="col">
+      <label for="actividades_reparacion" class="col-form-label col-form-label-sm">Actividades de reparación</label>
+      <textarea class="form-control form-control-sm card-register" id="actividades_reparacion" autocomplete="off" rows="3"
+        required></textarea>
+    </div>
+  </div>
+  <div class="row g-1">
+    <div class="col-5">
+      <label for="horas_hombre" class="col-form-label col-form-label-sm">Horas hombre</label>
+      <input type="time" class="form-control form-control-sm card-register"name="horas_hombre"
+        id="horas_hombre" required>
+    </div>
+    <div class="col">
+      <label for="fecha_entrega_deposito" class="col-form-label col-form-label-sm">Devolución a pañol</label>
+      <input type="date" class="form-control form-control-sm card-register"
+        id="fecha_entrega_deposito" required>
+    </div>
   </div>
   <div class="row g-1">
     <p class="lead mt-3 mb-0">Devolución a sector</p>
     <div class="col-5">
-        <label for="fecha_entrega_pannol" class="col-form-label col-form-label-sm">Devolución a sector</label>
-        <input type="date" class="form-control form-control-sm" aria-describedby="descripcionMaquina" name="fecha_entrega_pannol" id="fecha_entrega_pannol"required>
+      <label for="fecha_devolucion" class="col-form-label col-form-label-sm">Devolución a sector</label>
+      <input type="date" class="form-control form-control-sm card-register"
+        id="fecha_devolucion" required>
     </div>
     <div class="col">
-        <label for="responsable_entrega" class="col-form-label col-form-label-sm">Responsable de entrega</label>
-        <select class="form-select form-select-sm" name="responsable_entrega" id="responsable_entrega" required>
-            <option selected value=""></option>
-        </select>
+      <label for="responsable_entrega" class="col-form-label col-form-label-sm">Responsable de entrega</label>
+      <select class="form-select form-select-sm card-register" id="responsable_entrega" required>
+        <option selected value=""></option>
+      </select>
     </div>
-</div>
   </div>
+</div>
+<div id="loaded">
+
+</div>

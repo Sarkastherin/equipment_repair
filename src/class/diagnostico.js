@@ -6,7 +6,7 @@ class Diagnostico {
         this.diagnostico = diagnostico;
         this.atiende = atiende
     }
-    static async create(data) {
+    /* static async create(data) {
         let responsePost;
         try {
             data.id = await createId(sheetDiagnostico);
@@ -22,8 +22,8 @@ class Diagnostico {
         } catch (e) {
             console.log(e)
         }
-    }
-    static async hasDiagnostico(event,id_solicitud) {
+    } */
+    /* static async hasDiagnostico(event,id_solicitud) {
         let id;
         try {
             if(event) {id = event.target.value;}
@@ -35,8 +35,8 @@ class Diagnostico {
         } catch (e) {
             
         }
-    }
-    static async getDiagnosticoById(id) {
+    } */
+    /* static async getDiagnosticoById(id) {
         try {
             let response = await loadedResourses(sheetDiagnostico);
             response = arrayToObject(response);
@@ -45,8 +45,8 @@ class Diagnostico {
         } catch (e) {
 
         }
-    }
-    static canMadeDiagnostico() {
+    } */
+    /* static canMadeDiagnostico() {
         return hasUser && (usuario.rol == 'Usuario B' || usuario.rol == 'Administrador')
     }
     static async getDiagnosticos() {
@@ -57,5 +57,5 @@ class Diagnostico {
         } catch (e) {
             console.log(e)
         }
-    }
+    } */
 }

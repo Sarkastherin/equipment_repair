@@ -10,7 +10,7 @@ class Solicitud {
         this.solicita = solicita;
     }
 
-    static async create(data) {
+    /* static async create(data) {
         let responsePost;
         try {
             data.id = await createId(sheetSolicitud);
@@ -24,8 +24,8 @@ class Solicitud {
         } catch (e) {
             console.log(e)
         }
-    }
-    static async getSolicitudById(id) {
+    } */
+    /* static async getSolicitudById(id) {
         try {
             let response = await loadedResourses(sheetSolicitud);
             response = arrayToObject(response);
@@ -34,8 +34,8 @@ class Solicitud {
         } catch (e) {
 
         }
-    }
-    static async hasSolicitud(event) {
+    } */
+    /* static async hasSolicitud(event) {
         try {
             let id = event.target.value;
             let solicitudList = await loadedResourses(sheetSolicitud);
@@ -45,8 +45,8 @@ class Solicitud {
         } catch (e) {
             
         }
-    }
-    static canMadeSolicitud() {
+    } */
+    /* static canMadeSolicitud() {
         return hasUser
     }
     static async getSolicitudes() {
@@ -57,5 +57,5 @@ class Solicitud {
         } catch (e) {
             console.log(e)
         }
-    }
+    } */
 }
