@@ -3,10 +3,6 @@ let id;
 window.addEventListener("load", () => {
   loadPage('./html/loaded.html')
 });
-//const sheetSolicitud = 'Solicitud!A1:I';
-//const sheetDiagnostico = 'Diagnóstico!A1:E';
-//const sheetAccion = 'Acción!A1:G';
-//const sheetEntrega = 'Entrega!A1:D';
 const sheetEquipos = 'Equipos!A1:H';
 const sheetSectores = 'Sectores!A1:B';
 const sheetSubsectores = 'Subsectores!A1:C';

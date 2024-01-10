@@ -1,8 +1,8 @@
 class Subsector {
-    constructor ({id, id_sector, subsector}) {
+    constructor ({id, id_sector, nombre}) {
         this.id = id;
         this.id_sector = id_sector;
-        this.subsector = subsector
+        this.nombre = nombre
     }
     static async getSubsectoresBySector(id) {
         try {
@@ -26,7 +26,6 @@ class Subsector {
     }
     static async getSubsectorById(id) {
         try {
-            console.log(id)
             let response = await this.getSubsectores()
             let subsector = response.find(item => item.id === id)
             return subsector.nombre

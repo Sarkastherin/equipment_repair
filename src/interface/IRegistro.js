@@ -7,10 +7,11 @@ let nextButton;
 let footPage;
 let dataReverse;
 let dataFilter;
+let idRegister;
 const FilterValues = {}
 async function openRegistro() {
     try {
-        await loadPage('../src/html/consulta-registro.html')
+        await loadPage('../src/html/consulta-registro.html');
         prevButton = document.getElementById('prevPage');
         nextButton = document.getElementById('nextPage');
         footPage = document.getElementById('footPage');
@@ -39,6 +40,7 @@ async function openRegistro() {
 
     }
 }
+
 function loadTablePage(page, data) {
     const start = page * itemsPerPage;
     const end = start + itemsPerPage;
@@ -142,7 +144,7 @@ function getDataFiltered(data, filtro) {
     });
 }
 async function openRegister(event) {
-    let id = event.target.id;
+    idRegister = event.target.id;
     let offcanvasBody = document.getElementById('offcanvasBody')
     await loadPage('../src/html/card-register.html',offcanvasBody);
     let loaded = document.getElementById('loaded')
@@ -153,19 +155,22 @@ async function openRegister(event) {
     await loadUsuarios('quien_diagnostica')
     await loadUsuarios('responsable_reparacion')
     await loadUsuarios('responsable_entrega')
-    let data = dataReverse.find(item => item.id === id);
+    let data = dataReverse.find(item => item.id === idRegister);
     data.fecha_solicitud = dateForForm(data.fecha_solicitud)
     data.fecha_diagnostico = dateForForm(data.fecha_diagnostico)
     data.fecha_reparacion = dateForForm(data.fecha_reparacion)
     data.fecha_entrega_deposito = dateForForm(data.fecha_entrega_deposito)
     data.fecha_devolucion = dateForForm(data.fecha_devolucion)    
     loadInputsById(data,false)
-    document.getElementById('idField').innerText = id
+    document.getElementById('idField').innerText = idRegister
     let disabled = document.querySelectorAll('.card-register');
     disabled.forEach(item => item.setAttribute('disabled',''));
     document.getElementById('bodyCard').removeAttribute('hidden')
-    loaded.setAttribute('hidden','')
-    
+    loaded.setAttribute('hidden','') 
+}
+function editRegister() {
+    let disabled = document.querySelectorAll('.card-register');
+    disabled.forEach(item => item.removeAttribute('disabled',''));
 }
 function dateForForm(date) {
     let newDate;
